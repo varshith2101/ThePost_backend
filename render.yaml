@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: thepost-backend
+    runtime: node
+    env: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: DATABASE_URL
+        value: mongodb+srv://varshith_db:Squad_viper_69@thepost.6y3zj.mongodb.net/Articles_db?retryWrites=true&w=majority&appName=ThePost

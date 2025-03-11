@@ -1,0 +1,2 @@
+### Replace ARTICLE_ID with the actual _id from your database
+GET http://localhost:5000/api/articles/
