@@ -1,4 +1,4 @@
-POST http://localhost:5000/api/auth/login
+POST https://thepost-backend.onrender.com/api/auth/login
 Content-Type: application/json
 
 {
@@ -37,3 +37,6 @@ Content-Type: application/json
 
 ###
 GET http://localhost:5000/api/articles?category=Technology
+
+###
+POST https://thepost-backend.onrender.com/api/auth/login
