@@ -9,11 +9,9 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+mongoose.set('strictQuery', false); // Allow flexible filtering
 // Database Connection
-mongoose.connect(process.env.DATABASE_URL, { 
-  useNewUrlParser: true, 
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.DATABASE_URL)
   .then(() => {
     console.log("MongoDB Connected");
     // Optional: Add initial admin user check/setup here if needed

@@ -12,6 +12,6 @@ const ArticleSchema = new mongoose.Schema({
   post_modified: { type: Date, required: true },
   post_name: { type: String },
   category: { type: String, required: true }
-});
+}, { strict: false });
 
 module.exports = mongoose.model("Article", ArticleSchema, "Articles_of_TheMitPost");
