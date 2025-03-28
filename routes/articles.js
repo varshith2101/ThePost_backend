@@ -70,7 +70,6 @@ router.get("/:id", async (req, res) => {
   try {
     const article = await Article.findOne({
       _id: req.params.id,
-      isDeleted: false
     });
 
     if (!article) {
