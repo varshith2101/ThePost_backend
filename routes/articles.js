@@ -56,7 +56,7 @@ router.post("/", auth(["admin"]), async (req, res) => {
 // Get All Articles (Public)
 router.get("/", async (req, res) => {
   try {
-
+    console.log("Article collection: ", Article.collection.name); // Log the collection name
     const articles = await Article.find().sort({ pubDate: -1 }); // Newest first
 
     res.json(articles);
