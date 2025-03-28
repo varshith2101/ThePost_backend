@@ -39,4 +39,4 @@ Content-Type: application/json
 GET http://localhost:5000/api/articles?category=Technology
 
 ###
-POST https://thepost-backend.onrender.com/api/auth/login
+GET https://thepost-backend.onrender.com/api/articles

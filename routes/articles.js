@@ -56,15 +56,8 @@ router.post("/", auth(["admin"]), async (req, res) => {
 // Get All Articles (Public)
 router.get("/", async (req, res) => {
   try {
-    const { category } = req.query;
-    const filter = { isDeleted: false };
-    
-    if (category) {
-      filter.category = category;
-    }
 
-    const articles = await Article.find(filter)
-      .sort({ pubDate: -1 }); // Newest first
+    const articles = await Article.find().sort({ pubDate: -1 }); // Newest first
 
     res.json(articles);
   } catch (err) {
