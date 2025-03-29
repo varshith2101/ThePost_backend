@@ -42,7 +42,6 @@ router.post("/", auth(["admin"]), async (req, res) => {
       post_modified: new Date(req.body.post_modified),
       post_name: req.body.post_name || "",
       category: req.body.category,
-      isDeleted: false,
       views: 0
     });
 
@@ -98,7 +97,7 @@ router.put("/:id", auth(["admin"]), async (req, res) => {
     };
 
     const article = await Article.findOneAndUpdate(
-      { _id: req.params.id, isDeleted: false },
+      { _id: req.params.id},
       updates,
       { new: true, runValidators: true }
     );
@@ -117,7 +116,7 @@ router.put("/:id", auth(["admin"]), async (req, res) => {
 router.delete("/:id", auth(["admin"]), async (req, res) => {
   try {
     const article = await Article.findOneAndUpdate(
-      { _id: req.params.id, isDeleted: false },
+      { _id: req.params.id},
       { isDeleted: true },
       { new: true }
     );
