@@ -86,20 +86,50 @@ router.get("/:id", async (req, res) => {
 });
 
 // Update Article (Admin only)
+// Update Article (Admin only)
 router.put("/:id", auth(["admin"]), async (req, res) => {
   try {
-    const updates = {
-      ...req.body,
-      // Ensure dates are properly converted
-      ...(req.body.pubDate && { pubDate: new Date(req.body.pubDate) }),
-      ...(req.body.post_date && { post_date: new Date(req.body.post_date) }),
-      ...(req.body.post_modified && { post_modified: new Date(req.body.post_modified) })
+    // Only allow certain fields to be updated
+    const allowedUpdates = {
+      title: req.body.title,
+      creator: req.body.creator,
+      pubDate: req.body.pubDate ? new Date(req.body.pubDate) : undefined,
+      category: req.body.category,
+      content: req.body.content,
+      post_modified: new Date() // Always update modified date
     };
 
+    // Remove undefined values
+    Object.keys(allowedUpdates).forEach(key => 
+      allowedUpdates[key] === undefined && delete allowedUpdates[key]
+    );
+
+    // Basic validation for required fields
+    if (allowedUpdates.title && allowedUpdates.title.trim() === '') {
+      return res.status(400).json({ error: "Title cannot be empty" });
+    }
+
+    if (allowedUpdates.content && allowedUpdates.content.trim() === '') {
+      return res.status(400).json({ error: "Content cannot be empty" });
+    }
+
     const article = await Article.findOneAndUpdate(
-      { _id: req.params.id},
-      updates,
-      { new: true, runValidators: true }
+      { _id: req.params.id },
+      allowedUpdates,
+      { 
+        new: true, 
+        runValidators: true,
+        // Only return the fields the frontend needs
+        projection: {
+          title: 1,
+          creator: 1,
+          pubDate: 1,
+          category: 1,
+          content: 1,
+          post_modified: 1,
+          _id: 1
+        }
+      }
     );
 
     if (!article) {
@@ -108,7 +138,14 @@ router.put("/:id", auth(["admin"]), async (req, res) => {
 
     res.json(article);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    // More specific error handling
+    if (err.name === 'ValidationError') {
+      return res.status(400).json({ error: err.message });
+    }
+    if (err.name === 'CastError') {
+      return res.status(400).json({ error: "Invalid article ID" });
+    }
+    res.status(500).json({ error: "Server error while updating article" });
   }
 });
 
