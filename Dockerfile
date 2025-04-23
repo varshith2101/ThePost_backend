@@ -17,4 +17,6 @@ COPY . .
 EXPOSE 3000
 
 # Start the app
-CMD ["npm","run", "devStart"]  # Replace with your entry file
+CMD ["npm", "run", "devStart"]  
+
+# Replace with your entry file
