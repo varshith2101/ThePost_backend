@@ -40,3 +40,6 @@ GET http://localhost:5000/api/articles?category=Technology
 
 ###
 GET https://thepost-backend.onrender.com/api/articles
+
+###
+HEAD https://mit-post-api.internal.bravetree-751c3be1.eastus.azurecontainerapps.io
