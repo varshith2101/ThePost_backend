@@ -17,6 +17,6 @@ COPY . .
 EXPOSE 5000
 
 # Start the app
-CMD ["npm", "run", "devStart"]  
+CMD ["node", "server.js"]  
 
 # Replace with your entry file
